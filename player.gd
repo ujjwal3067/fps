@@ -1,10 +1,10 @@
 extends KinematicBody
 
-const GRAVITY = -24.8
+const GRAVITY = -94.8
 var vel = Vector3()
-const MAX_SPEED = 20
-const JUMP_SPEED = 18
-const ACCEL = 4.5
+const MAX_SPEED = 40
+const JUMP_SPEED = 68
+const ACCEL = 8.5
 
 var dir = Vector3()
 
@@ -20,7 +20,7 @@ func _ready():
 	camera = $Rotation_Helper/Camera
 	rotation_helper = $Rotation_Helper
 
-	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED) # more crosshair locking
 
 func _physics_process(delta):
 	process_input(delta)
