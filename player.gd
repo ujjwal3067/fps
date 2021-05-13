@@ -1,20 +1,22 @@
 extends KinematicBody
 
-const GRAVITY = -94.8
+################################################
+#----Class variables
+
 var vel = Vector3()
+var dir = Vector3()
+
+const GRAVITY = -94.8
 const MAX_SPEED = 40
 const JUMP_SPEED = 68
 const ACCEL = 8.5
-
-var dir = Vector3()
-
 const DEACCEL= 16
 const MAX_SLOPE_ANGLE = 40
-
 var camera
 var rotation_helper
-
 var MOUSE_SENSITIVITY = 0.05
+
+################################################
 
 func _ready():
 	camera = $Rotation_Helper/Camera
@@ -92,6 +94,7 @@ func process_movement(delta):
 
 func _input(event):
 	if event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
+		# rotating the model via rotation_helper
 		rotation_helper.rotate_x(deg2rad(event.relative.y * MOUSE_SENSITIVITY))
 		self.rotate_y(deg2rad(event.relative.x * MOUSE_SENSITIVITY * -1))
 
