@@ -16,8 +16,8 @@ var camera
 var rotation_helper
 var MOUSE_SENSITIVITY = 0.09
 
-const MAX_SPRINT_SPEED = 30
-const SPRINT_ACCEL = 18
+const MAX_SPRINT_SPEED = 80
+const SPRINT_ACCEL = 13
 var is_sprinting = false
 var flashlight #(variable holds the player flashlight node)
 
@@ -101,7 +101,6 @@ func process_movement(delta):
 	hvel.y = 0 # hvel ::  reference to player velocity
 
 	var target = dir
-	# target *= MAX_SPEED
 	if is_sprinting :
 		target  *= MAX_SPRINT_SPEED # max sprinting speed lock
 	else:
@@ -127,6 +126,7 @@ func process_movement(delta):
 func _input(event):
 	# check for the event if it's inputevent mouse motion or not
 	if event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
+
 		# rotating the model via rotation_helper
 		rotation_helper.rotate_x(deg2rad(event.relative.y * MOUSE_SENSITIVITY))
 		self.rotate_y(deg2rad(event.relative.x * MOUSE_SENSITIVITY * -1))
