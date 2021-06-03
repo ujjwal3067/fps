@@ -1,6 +1,7 @@
 extends AnimationPlayer
 
-# Structure -> Animation name : [Connecting animation states ]
+# Structure -> Animation Name : [Connecting Animation States ]
+# Similar to State  Machines in Bio Informatics ( Viterbi Algorithm )
 var states = {
 	"Idle_unarmed"  :["Knife_equip", "Pistol_equip", "Rifle_equip", "Idle_unarmed"],
 	"Pistol_equip"  :["Pistol_idle"],
@@ -22,7 +23,7 @@ var states = {
 
 }
 
-# Structure -> Animation speed
+# Structure -> Animation Speed
 var animation_speeds = {
 	"Idle_unarmed":1,
 
@@ -45,21 +46,24 @@ var animation_speeds = {
 }
 
 
-var current_state = null
-var callback_function = null
+var current_state = null # keeps tracks of current animation playing
+var callback_function = null # funcref ( for passing function as arguments  )
 
 func _ready():
 	set_animation("idle_unarmed") # setting ready animation
+	# when animation is ended this animation_ended() function is going to be called :" automatic"
 	connect("animation_finished", self, "animation_ended") # connecting signal animation_ended with function animation_ended(anin_name)
 
 func set_animation(animation_name):
 	if animation_name == current_state:
 		print("AnimationPlayer_Manager.gd -- WARNING : animation is already ", animation_name)
 		return true
+
 	if has_animation(animation_name):
 		if current_state != null :
 			var possible_animations = states[current_state] # get the possible states of animation possible after current state
 			if animation_name in possible_animations:
+				# blend time = -1 and 3rd parameter is for animation speed
 				play(animation_name, -1, animation_speeds[animation_name])
 				return true
 			else:
@@ -73,6 +77,7 @@ func set_animation(animation_name):
 	return false
 
 
+# transtion from active to idle state for various active state
 func animation_ended(anim_name):
 
 	# UNARMED transitions
